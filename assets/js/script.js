@@ -1,3 +1,9 @@
+// ONLOAD 
+addEventListener('load', (e) => {
+    hentData()
+    bygStatics()
+})
+
 
 // FUNCTION HENTER DATA FRA LOCALSTORAGE OG KONVERTERE DEN. 
     // MANGLER KONVERTERING
@@ -11,3 +17,4 @@ function hentData(){
         dataReceived()
     }
 }
+
