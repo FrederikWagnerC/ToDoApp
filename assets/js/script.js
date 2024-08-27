@@ -9,15 +9,11 @@ function saveData() {
 
 // ONLOAD 
 addEventListener('load', (e) => {
-    readData()
-    hentData()
     bygStatics()
+    hentData()
 
 })
 
-function readData() {
-
-}
 
 
 // FUNCTION HENTER DATA FRA LOCALSTORAGE OG KONVERTERE DEN. 
@@ -30,6 +26,7 @@ function hentData() {
         myData = tempData
     }
 
+    bygListeSection()
 
 
     // if(error) {
@@ -47,6 +44,10 @@ window.addEventListener('beforeunload', (e) => {
     // localStorage.clear()
 })
 
+function dataReceived() {
+    bygListeSection()
+}
+
 
 // VIEWCODE ----------------------------------------------------------------------------
 
@@ -61,6 +62,12 @@ function bygTitle() {
     bygH1.setAttribute('id', 'title')
     bygH1.append('ToDoApp')
     bygHeader.appendChild(bygH1)
+}
+
+function bygListeSectionElement() {
+    const bygListeSectionElement = document.createElement('section')
+    bygListeSectionElement.setAttribute('id', 'listeSection')
+    body.appendChild(bygListeSectionElement)
 }
 
 function bygFooter() {
@@ -78,17 +85,43 @@ function bygFooter() {
         }
 
         myData.push(myList)
-        console.log(myData)
-        // console.log(JSON.stringify(myData));
-
+        saveData()
+        bygListeSection()
     })
     bygFooter.appendChild(bygNyListeKnap)
 }
 
 function bygStatics() {
     bygTitle()
+    bygListeSectionElement()
     bygFooter()
 }
 
+function bygListeSection() {
+    const listeSectionElement = document.getElementById('listeSection')
+    listeSectionElement.innerHTML = ''
+    
+    for(let i = 0; i < myData.length; i++) {
+        const bygListeSectionDiv = document.createElement('div')
+        bygListeSectionDiv.setAttribute('id', 'listeSectionDiv')
+        listeSectionElement.appendChild(bygListeSectionDiv)
+        const bygListeSectionP = document.createElement('p')
+        bygListeSectionP.append(myData[i].name)
+        bygListeSectionDiv.appendChild(bygListeSectionP)
+        const bygListeRemoveButton = document.createElement('p')
+        bygListeRemoveButton.setAttribute('id', 'listeRemoveButton')
+        bygListeRemoveButton.append('X')
+        bygListeRemoveButton.addEventListener('click', (e) => {
+            const listIndex = i
+            event.target.parentElement.remove()
+            myData.splice(listIndex,1)
+            saveData()
+            bygListeSection()
+            
+        })
+        bygListeSectionDiv.appendChild(bygListeRemoveButton)
+        
+    }
+}
 
 
