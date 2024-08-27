@@ -1,27 +1,54 @@
 const body = document.getElementById('app')
+let myData = []
+
+// SAVEDATA 
+function saveData() {
+    let saveableData = JSON.stringify(myData)
+    localStorage.setItem('data', saveableData)
+}
 
 // ONLOAD 
 addEventListener('load', (e) => {
-    let testStorage = localStorage.getItem('test')
-    console.log(testStorage)
-    // hentData()
+    readData()
+    hentData()
     bygStatics()
-    localStorage.setItem('test', 'asd')
+
 })
+
+function readData() {
+
+}
 
 
 // FUNCTION HENTER DATA FRA LOCALSTORAGE OG KONVERTERE DEN. 
-    // MANGLER KONVERTERING
 
 function hentData() {
-    // localStorage.getItem() // MANGLER DATA
-    // MANGLER KONVERTERING
+    let tempData = JSON.parse(localStorage.getItem('data'))
+    if (!tempData) {
+        myData = []
+    } else {
+        myData = tempData
+    }
+
+
+
     // if(error) {
     //     dataError()
     // } else {
     //     dataReceived()
     // }
+    console.log(myData)
+
+
 }
+
+window.addEventListener('beforeunload', (e) => {
+    saveData()
+    // localStorage.clear()
+})
+
+
+// VIEWCODE ----------------------------------------------------------------------------
 
 // STATICS 
 
@@ -36,8 +63,32 @@ function bygTitle() {
     bygHeader.appendChild(bygH1)
 }
 
+function bygFooter() {
+    const bygFooter = document.createElement('footer')
+    bygFooter.setAttribute('id', 'footer')
+    body.appendChild(bygFooter)
+
+    const bygNyListeKnap = document.createElement('p')
+    bygNyListeKnap.setAttribute('id', 'NyListeKnap')
+    bygNyListeKnap.append('+')
+    bygNyListeKnap.addEventListener('click', (e) => {
+        let myList = {
+            name: 'New List',//key value pair
+            listItems: []
+        }
+
+        myData.push(myList)
+        console.log(myData)
+        // console.log(JSON.stringify(myData));
+
+    })
+    bygFooter.appendChild(bygNyListeKnap)
+}
+
 function bygStatics() {
     bygTitle()
-    // bygFooter()
+    bygFooter()
 }
+
+
 
