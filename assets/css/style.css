@@ -3,3 +3,102 @@
     padding: 0;
     font-family: "Poppins", sans-serif;
 }
+
+:root {
+    --color-bg: #282828;
+    --color-text: #ffffff;
+    --color-deaf: #FFFFFF50;
+    --color-complete: #2AFF00;
+}
+
+/* HEADER  */
+
+#header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 5vh;
+    display: flex;
+    background-color: var(--color-bg);
+    justify-content: center;
+    border-bottom: 1px solid var(--color-text);
+    color: var(--color-text);
+    padding: 1rem 0rem;
+}
+
+/* LISTE SECTION  */
+
+#listeSection {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    height: 85vh;
+    overflow-y: scroll;
+    flex-grow: inherit;
+    margin-top: 8vh;
+    padding-top: 2rem;
+}
+
+.listeSectionDiv, .listeSectionItemDiv {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem;
+    border: 1px solid var(--color-text);
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;    
+}
+
+.listeSectionDiv p, .listeSectionItemDiv p {
+    font-size: 1.5rem;
+}
+
+
+
+.listeSectionDiv p:first-of-type {
+    flex-grow: inherit;
+}
+
+.listeSectionItemDiv input {
+    width: 20px;
+    accent-color: var(--color-complete);
+} 
+
+#listeRemoveButton {
+    z-index: 10;
+    position: absolute;
+    right: 1rem;
+}
+/* FOOTER  */
+
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    border-top: 1px solid var(--color-text);
+}
+
+#footer div {
+    display: flex;
+    justify-content: center;
+    font-size: 2rem;
+}
+
+#nyListeKnap {
+    /* position: absolute;
+    transform: translate(-50%,-50%);
+    left: 50%;
+    top: 50%; */
+    justify-self: center;
+    align-self: center;
+}
+
+#tilbageButton {
+    position: absolute;
+    left: 1rem;
+}

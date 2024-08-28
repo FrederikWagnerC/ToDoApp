@@ -65,7 +65,7 @@ function bygListeItemSection(listIndex) {
     for (let i = 0; i < myData[listIndex].listItems.length; i++) {
         let ListItemIndex = i
         const bygListeItemSectionDiv = document.createElement('div')
-        bygListeItemSectionDiv.setAttribute('id', 'listeSectionItemDiv' + i)
+        bygListeItemSectionDiv.setAttribute('class', 'listeSectionItemDiv')
         listeSectionElement.appendChild(bygListeItemSectionDiv)
 
         const bygListeItemP = document.createElement('p')
@@ -74,20 +74,13 @@ function bygListeItemSection(listIndex) {
 
         const bygListeItemCheckbox = document.createElement('input')
         bygListeItemCheckbox.setAttribute('type', 'checkbox')
-        if(myData[listIndex].listItems[i].status === true) {
+        if (myData[listIndex].listItems[i].status === true) {
             bygListeItemCheckbox.checked = true;
         }
         bygListeItemCheckbox.addEventListener('click', (e) => {
             myData[listIndex].listItems[i].status = event.target.checked
-            // console.log(event.target.checked);
-
             console.log(myData[listIndex].listItems[i].status);
             saveData()
-            // console.log(myData);
-            
-            
-            
-
         })
         bygListeItemSectionDiv.appendChild(bygListeItemCheckbox)
 
@@ -106,12 +99,8 @@ function bygListeSection() {
     for (let i = 0; i < myData.length; i++) {
         const listIndex = i
         const bygListeSectionDiv = document.createElement('div')
-        bygListeSectionDiv.setAttribute('id', 'listeSectionDiv' + i)
-        listeSectionElement.appendChild(bygListeSectionDiv)
-
-        const bygListeSectionP = document.createElement('p')
-        bygListeSectionP.append(myData[i].name)
-        bygListeSectionP.addEventListener('click', (e) => {
+        bygListeSectionDiv.setAttribute('class', 'listeSectionDiv')
+        bygListeSectionDiv.addEventListener('click', (e) => {
             bygListeItemSection(listIndex)
             listStatus = true;
             bygH1(listIndex)
@@ -119,6 +108,10 @@ function bygListeSection() {
 
             return listIndex
         })
+        listeSectionElement.appendChild(bygListeSectionDiv)
+
+        const bygListeSectionP = document.createElement('p')
+        bygListeSectionP.append(myData[i].name)
 
         bygListeSectionDiv.appendChild(bygListeSectionP)
         const bygListeRemoveButton = document.createElement('p')
@@ -140,13 +133,17 @@ function bygListeSection() {
 // LIST ITEM ADD BUTTON 
 function listItemAddButton(listIndex) {
     let toDoItem = prompt('Type your ToDoItem')
-    let newToDoItem = {
-        name: toDoItem,
-        status: false
+    if (!toDoItem == ' ') {
+        let newToDoItem = {
+            name: toDoItem,
+            status: false
+        }
+        myData[listIndex].listItems.push(newToDoItem)
+        bygListeItemSection(listIndex)
+        saveData()
+    } else {
+        alert('You have to type something')
     }
-    myData[listIndex].listItems.push(newToDoItem)
-    bygListeItemSection(listIndex)
-    saveData()
 }
 
 
@@ -189,7 +186,7 @@ function bygListeSectionElement() {
 function bygFooter(listIndex) {
     let currentIndex = listIndex
     const footerElement = document.getElementById('footer')
-    footerElement.innerHTML=''
+    footerElement.innerHTML = ''
     const bygFooterDiv = document.createElement('div')
     bygFooterDiv.setAttribute('id', 'footerDiv')
     footerElement.appendChild(bygFooterDiv)
@@ -199,7 +196,7 @@ function bygFooter(listIndex) {
     if (listStatus) {
         const bygTilbageButton = document.createElement('p')
         bygTilbageButton.setAttribute('id', 'tilbageButton')
-        bygTilbageButton.append('<=')
+        bygTilbageButton.append('<-')
         bygTilbageButton.addEventListener('click', (e) => {
             listStatus = false
             bygH1()
@@ -209,18 +206,23 @@ function bygFooter(listIndex) {
         bygFooterDiv.appendChild(bygTilbageButton)
     }
     const bygNyListeKnap = document.createElement('p')
-    bygNyListeKnap.setAttribute('id', 'NyListeKnap')
+    bygNyListeKnap.setAttribute('id', 'nyListeKnap')
     bygNyListeKnap.append('+')
     bygNyListeKnap.addEventListener('click', (e, listIndex) => {
         if (!listStatus) {
             let newListName = prompt('Name your ToDoList')
-            let myList = {
-                name: newListName,//key value pair
-                listItems: []
+            if (!newListName == ' ') {
+                let myList = {
+                    name: newListName,//key value pair
+                    listItems: []
+                }
+                myData.push(myList)
+                saveData()
+                bygListeSection()
+            } else {
+                alert('You have to type something')
             }
-            myData.push(myList)
-            saveData()
-            bygListeSection()
+
 
         } else if (listStatus) {
             listIndex = currentIndex
@@ -231,7 +233,7 @@ function bygFooter(listIndex) {
 
     })
     bygFooterDiv.appendChild(bygNyListeKnap)
-    
+
 }
 
 function bygFooterSection() {
